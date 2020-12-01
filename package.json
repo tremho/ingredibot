@@ -1,15 +1,17 @@
 {
   "name": "ingredibot",
   "version": "0.0.0",
-  "description": "Collect ingredieat data from apis",
+  "description": "Collect ingredient data from apis",
   "main": "build/index.js",
   "scripts": {
     "clean": "rm -fr ./build ./npm",
     "build": "tsc",
-    "start": "npm run clean && npm run build && node ./build/index.js",
+    "start": "npm run clean && npm run build && node ./build/src/index.js",
     "test": "npm run clean && npm run build && nyc tap --no-timeout ./build/test/*.test.js",
     "directTest-sanity": "npm run clean && npm run build && node ./build/test/sanity.test.js",
-    "doc": "npm run clean && npm run build && inchjs && cd build; tsccd ./; documentation readme --readme-file ../README.md --markdown-toc false --section API UnitMeasure.js",
+    "directTest-parsing": "npm run clean && npm run build && node ./build/test/parsing.test.js",
+    "directTest-reconcile": "npm run clean && npm run build && node ./build/test/reconcile.test.js",
+    "doc": "npm run clean && npm run build && inchjs && cd build; tsccd ./; documentation readme --readme-file ../doc/API.md --markdown-toc false --section \"Ingredibot API\" src/index.js && documentation readme --readme-file ../README.md --markdown-toc false --section API src/index.js",
     "npm-prep": "node script/npm-prep.js",
     "npm-publish": "npm run clean && npm run build && npm run doc && bump -tpa README.md package.json npm-package.json && npm run test && npm run npm-prep && cd npm && npm publish"
   },
@@ -40,6 +42,8 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
+    "aws-sdk": "^2.794.0",
+    "iso8601-duration": "^1.2.0",
     "spawn-wrap": "^2.0.0",
     "unirest": "^0.6.0",
     "unit-measure": "^0.1.2",

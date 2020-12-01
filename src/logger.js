@@ -12,6 +12,7 @@ if (!FS.existsSync(logdir)) {
   FS.mkdirSync(logdir)
 }
 
+// Defines the transports and their format/capabilites
 const transports = {
   console: new winston.transports.Console({
     level: 'debug',
@@ -24,7 +25,7 @@ const transports = {
     )
   }),
   file: new winston.transports.File({
-    filename: Path.join(logdir,'wagtales.log'),
+    filename: Path.join(logdir,'igredibot.log'),
     level: 'debug',
     handleExceptions: true,
     format: combine(
@@ -49,6 +50,14 @@ const logger = winston.createLogger({
 
 })
 
+/* (do not emit documentation)
+ * Call to log an exception.
+ * may pass an exception only, or message and exception
+ * Exception is logged with stack information.
+ *
+ * @param {string|Error} optmsg Optionsl message to pass, or just the exception
+ * @param {Error} [e] Exception to log.
+ */
 logger.exception = function(optmsg, e) {
   if(!e) {
     // single parameter error object
